@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Big or Small Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .output {
+            font-size: 2em;
+            margin: 20px;
+        }
+        .period {
+            font-size: 1.2em;
+            color: grey;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Random Big or Small Generator</h1>
+    <div class="output" id="randomOutput">Waiting...</div>
+    <div class="period" id="periodNumber">Period: 1</div>
+
+    <script>
+        let period = 1;
+
+        function generateRandomOutput() {
+            // Randomly generate "big" or "small"
+            const randomValue = Math.random() > 0.5 ? "big" : "small";
+            // Update the output div
+            document.getElementById('randomOutput').innerText = randomValue;
+            // Update the period number
+            document.getElementById('periodNumber').innerText = `Period: ${period}`;
+            // Increment the period
+            period++;
+        }
+
+        // Set an interval to generate the random output every minute (60000 ms)
+        setInterval(generateRandomOutput, 60000);
+
+        // Initialize the first output
+        generateRandomOutput();
+    </script>
+    
+</body>
+</html>
