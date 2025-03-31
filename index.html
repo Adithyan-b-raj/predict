@@ -3,93 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Big or Small Generator</title>
+    <title>Size Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
             text-align: center;
-            padding: 50px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .output {
-            font-size: 2em;
-            margin: 20px;
+        
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
-        .period {
-            font-size: 1.2em;
-            color: grey;
+        
+        button:hover {
+            background-color: #45a049;
         }
-        .predictions {
-            margin-top: 30px;
-            text-align: left;
-            max-height: 300px;
-            overflow-y: scroll;
-            margin-bottom: 50px;
+        
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            min-height: 36px;
+        }
+        
+        .small {
+            color: blue;
+            font-size: 16px;
+        }
+        
+        .big {
+            color: red;
+            font-size: 32px;
         }
     </style>
 </head>
 <body>
-
-    <h1>Random Big or Small Generator</h1>
-    <div class="output" id="randomOutput">Waiting...</div>
-    <div class="period" id="periodNumber">Period: 1</div>
-
-    <h2>Previous Predictions</h2>
-    <div class="predictions" id="predictionsList"></div>
+    <div class="container">
+        <h1>Size Generator</h1>
+        <button id="generateBtn">Generate Size</button>
+        <div id="result"></div>
+    </div>
 
     <script>
-        // Retrieve the last saved period and timestamp from localStorage
-        let period = parseInt(localStorage.getItem('period')) || 1;
-        let lastTimestamp = parseInt(localStorage.getItem('lastTimestamp')) || Date.now();
-
-        // Retrieve previous predictions from localStorage, if any
-        let predictions = JSON.parse(localStorage.getItem('predictions')) || [];
-
-        function generateRandomOutput() {
-            // Calculate the elapsed time in minutes
-            const currentTime = Date.now();
-            const minutesElapsed = Math.floor((currentTime - lastTimestamp) / 60000);
-
-            // Update the period based on the elapsed time
-            period += minutesElapsed;
-
-            // Randomly generate "big" or "small"
-            const randomValue = Math.random() > 0.5 ? "big" : "small";
-
-            // Add the current prediction to the predictions array
-            predictions.push({ period, prediction: randomValue });
-
-            // Update the output div
-            document.getElementById('randomOutput').innerText = randomValue;
-            // Update the period number
-            document.getElementById('periodNumber').innerText = `Period: ${period}`;
-
-            // Save the new period, timestamp, and predictions in localStorage
-            localStorage.setItem('period', period);
-            localStorage.setItem('lastTimestamp', currentTime);
-            localStorage.setItem('predictions', JSON.stringify(predictions));
-
-            // Update the predictions list display
-            updatePredictionsList();
-        }
-
-        function updatePredictionsList() {
-            const predictionsList = document.getElementById('predictionsList');
-            predictionsList.innerHTML = ''; // Clear previous list
-
-            // Create and display a list of all previous predictions
-            predictions.forEach(prediction => {
-                const listItem = document.createElement('div');
-                listItem.textContent = `Period: ${prediction.period} - ${prediction.prediction}`;
-                predictionsList.appendChild(listItem);
-            });
-        }
-
-        // Set an interval to generate the random output every minute (60000 ms)
-        setInterval(generateRandomOutput, 60000);
-
-        // Initialize the first output and update the predictions list
-        generateRandomOutput();
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            const resultElement = document.getElementById('result');
+            // Generate random number (0 or 1)
+            const randomValue = Math.round(Math.random());
+            
+            if (randomValue === 0) {
+                resultElement.textContent = 'small';
+                resultElement.className = 'small';
+            } else {
+                resultElement.textContent = 'big';
+                resultElement.className = 'big';
+            }
+        });
     </script>
-    
 </body>
 </html>
