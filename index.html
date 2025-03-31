@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Size Generator</title>
+    <title>Size Generator with Period</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,6 +22,26 @@
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
         }
         
         button {
@@ -33,17 +53,30 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
+            width: 100%;
         }
         
         button:hover {
             background-color: #45a049;
         }
         
-        #result {
+        .result-container {
             margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        
+        #result {
             font-size: 24px;
             font-weight: bold;
             min-height: 36px;
+        }
+        
+        #current-period {
+            font-size: 16px;
+            color: #666;
+            margin-top: 10px;
         }
         
         .small {
@@ -60,14 +93,32 @@
 <body>
     <div class="container">
         <h1>Size Generator</h1>
+        
+        <div class="input-group">
+            <label for="period-input">Starting Period Number:</label>
+            <input type="number" id="period-input" value="1" min="1">
+        </div>
+        
         <button id="generateBtn">Generate Size</button>
-        <div id="result"></div>
+        
+        <div class="result-container">
+            <div id="result">Click the button to start</div>
+            <div id="current-period">Current Period: 1</div>
+        </div>
     </div>
 
     <script>
         document.getElementById('generateBtn').addEventListener('click', function() {
             const resultElement = document.getElementById('result');
-            // Generate random number (0 or 1)
+            const periodElement = document.getElementById('current-period');
+            const periodInput = document.getElementById('period-input');
+            
+            // Get and increment the period number
+            let currentPeriod = parseInt(periodInput.value);
+            periodInput.value = currentPeriod + 1;
+            periodElement.textContent = `Current Period: ${currentPeriod}`;
+            
+            // Generate random size
             const randomValue = Math.round(Math.random());
             
             if (randomValue === 0) {
